@@ -1,0 +1,140 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "username": { "type": "string" },
+        "dietPreference": { "type": "string" },
+        "healthGoal": { "type": "string" },
+        "age": { "type": "string" },
+        "gender": { "type": "string" },
+        "height": { "type": "string" },
+        "weight": { "type": "string" },
+        "activityLevel": { "type": "string" },
+        "allergies": { "type": "string" },
+        "consumptionPreference": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "username", "createdAt"]
+    },
+    "ScanResult": {
+      "title": "ScanResult",
+      "description": "A nutrition label scan result",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "brand": { "type": "string" },
+        "servingSize": { "type": "string" },
+        "calories": { "type": "number" },
+        "sugar": { "type": "number" },
+        "fat": { "type": "number" },
+        "sodium": { "type": "number" },
+        "carbohydrates": { "type": "number" },
+        "protein": { "type": "number" },
+        "ingredients": { "type": "array", "items": { "type": "string" } },
+        "healthScore": { "type": "number" },
+        "category": { "type": "string", "enum": ["Healthy", "Moderate", "Risky", "Unhealthy"] },
+        "uiLabel": { "type": "string", "enum": ["Healthy", "Occasionally", "Risky", "Avoid"] },
+        "recommendation": { "type": "string" },
+        "positives": { "type": "array", "items": { "type": "string" } },
+        "negatives": { "type": "array", "items": { "type": "string" } },
+        "frequency": { "type": "string" },
+        "maxIntake": { "type": "string" },
+        "source": { "type": "string", "enum": ["Newly Analyzed", "Retrieved from Database"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "productName", "servingSize", "calories", "sugar", "fat", "sodium", "carbohydrates", "protein", "healthScore", "category", "uiLabel", "recommendation", "source", "createdAt"]
+    },
+    "GlobalProduct": {
+      "title": "GlobalProduct",
+      "description": "A global database of analyzed products",
+      "type": "object",
+      "properties": {
+        "productName": { "type": "string" },
+        "brandName": { "type": "string" },
+        "normalizedKey": { "type": "string" },
+        "nutritionData": {
+          "type": "object",
+          "properties": {
+            "servingSize": { "type": "string" },
+            "calories": { "type": "number" },
+            "sugar": { "type": "number" },
+            "fat": { "type": "number" },
+            "saturatedFat": { "type": "number" },
+            "sodium": { "type": "number" },
+            "carbohydrates": { "type": "number" },
+            "fiber": { "type": "number" },
+            "protein": { "type": "number" },
+            "ingredients": { "type": "array", "items": { "type": "string" } },
+            "caffeine": { "type": "string" }
+          }
+        },
+        "healthScore": { "type": "number" },
+        "category": { "type": "string", "enum": ["Healthy", "Moderate", "Risky", "Unhealthy"] },
+        "uiLabel": { "type": "string", "enum": ["Healthy", "Occasionally", "Risky", "Avoid"] },
+        "insights": {
+          "type": "object",
+          "properties": {
+            "positives": { "type": "array", "items": { "type": "string" } },
+            "negatives": { "type": "array", "items": { "type": "string" } },
+            "recommendation": { "type": "string" },
+            "frequency": { "type": "string" },
+            "maxIntake": { "type": "string" },
+            "recommendedFrequency": { "type": "string", "enum": ["Avoid", "Occasionally", "Regular"] },
+            "frequencyReason": { "type": "string" },
+            "whoShouldBeCareful": { "type": "array", "items": { "type": "string" } },
+            "healthierAlternatives": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productName", "brandName", "normalizedKey", "nutritionData", "healthScore", "category", "uiLabel", "insights", "createdAt"]
+    },
+    "UserHistory": {
+      "title": "UserHistory",
+      "description": "User's scan history",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "scannedAt": { "type": "string", "format": "date-time" },
+        "productName": { "type": "string" },
+        "brandName": { "type": "string" },
+        "healthScore": { "type": "number" },
+        "category": { "type": "string", "enum": ["Healthy", "Moderate", "Risky", "Unhealthy"] },
+        "uiLabel": { "type": "string", "enum": ["Healthy", "Occasionally", "Risky", "Avoid"] },
+        "recommendedFrequency": { "type": "string", "enum": ["Avoid", "Occasionally", "Regular"] },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "sugar": { "type": "number" },
+        "fat": { "type": "number" }
+      },
+      "required": ["productId", "scannedAt", "productName", "brandName", "healthScore", "category", "uiLabel"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Stores user profiles"
+    },
+    "/users/{userId}/history/{scanId}": {
+      "schema": {
+        "$ref": "#/entities/UserHistory"
+      },
+      "description": "Stores user's scan history"
+    },
+    "/products/{productId}": {
+      "schema": {
+        "$ref": "#/entities/GlobalProduct"
+      },
+      "description": "Stores global product database"
+    }
+  }
+}

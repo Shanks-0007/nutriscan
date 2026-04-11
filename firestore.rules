@@ -1,0 +1,180 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: users
+    // Document ID: {userId}
+    // Fields:
+    //   - uid: string (required, immutable) - The user's unique identifier
+    //   - email: string (required) - The user's email address
+    //   - username: string (required) - The user's chosen display name
+    //   - dietPreference: string (optional) - User's dietary preference
+    //   - healthGoal: string (optional) - User's health goal
+    //   - createdAt: timestamp (required, immutable) - When the profile was created
+    //
+    // Collection: scans
+    // Document ID: {scanId}
+    // Fields:
+    //   - userId: string (required, immutable) - The ID of the user who performed the scan
+    //   - productName: string (required) - The name of the scanned product
+    //   - servingSize: string (required) - The serving size from the label
+    //   - calories: number (required) - Calories per serving
+    //   - sugar: number (required) - Sugar in grams
+    //   - fat: number (required) - Total fat in grams
+    //   - sodium: number (required) - Sodium in milligrams
+    //   - carbohydrates: number (required) - Total carbohydrates in grams
+    //   - protein: number (required) - Protein in grams
+    //   - healthScore: number (required) - Calculated health score (0-100)
+    //   - category: string (required) - Categorized health status based on score
+    //   - uiLabel: string (required) - UI label for the health status
+    //   - recommendation: string (required) - AI generated diet recommendation
+    //   - createdAt: timestamp (required, immutable) - When the scan was performed
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "alwalavinayak31@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+
+    function uidUnchanged() {
+      return !(request.resource.data.keys().hasAny(['uid'])) || request.resource.data.uid == request.auth.uid;
+    }
+
+    function uidNotModified() {
+      return !(request.resource.data.keys().hasAny(['uid'])) || request.resource.data.uid == resource.data.uid;
+    }
+
+    function userIdUnchanged() {
+      return !(request.resource.data.keys().hasAny(['userId'])) || request.resource.data.userId == request.auth.uid;
+    }
+
+    function userIdNotModified() {
+      return !(request.resource.data.keys().hasAny(['userId'])) || request.resource.data.userId == resource.data.userId;
+    }
+
+    function isValidOptionalNumber(data, field, min, max) {
+      return !(data.keys().hasAny([field])) || (data[field] is number && data[field] >= min && data[field] <= max);
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidDateString(dateStr) {
+      return dateStr is string && dateStr.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.*$");
+    }
+
+    function isValidUser(data) {
+      let allowedFields = ['uid', 'email', 'username', 'dietPreference', 'healthGoal', 'age', 'gender', 'height', 'weight', 'activityLevel', 'allergies', 'consumptionPreference', 'createdAt', 'role'];
+      return hasOnlyAllowedFields(allowedFields) &&
+             data.uid is string && data.uid.size() > 0 && data.uid.size() < 100 &&
+             data.email is string && isValidEmail(data.email) && data.email.size() < 100 &&
+             data.username is string && data.username.size() > 0 && data.username.size() < 50 &&
+             (!(data.keys().hasAny(['dietPreference'])) || (data.dietPreference is string && data.dietPreference.size() < 100)) &&
+             (!(data.keys().hasAny(['healthGoal'])) || (data.healthGoal is string && data.healthGoal.size() < 100)) &&
+             (!(data.keys().hasAny(['age'])) || (data.age is string && data.age.size() < 20)) &&
+             (!(data.keys().hasAny(['gender'])) || (data.gender is string && data.gender.size() < 20)) &&
+             (!(data.keys().hasAny(['height'])) || (data.height is string && data.height.size() < 20)) &&
+             (!(data.keys().hasAny(['weight'])) || (data.weight is string && data.weight.size() < 20)) &&
+             (!(data.keys().hasAny(['activityLevel'])) || (data.activityLevel is string && data.activityLevel.size() < 50)) &&
+             (!(data.keys().hasAny(['allergies'])) || (data.allergies is string && data.allergies.size() < 500)) &&
+             (!(data.keys().hasAny(['consumptionPreference'])) || (data.consumptionPreference is string && data.consumptionPreference.size() < 100)) &&
+             (!(data.keys().hasAny(['role'])) || (data.role is string && data.role in ['client', 'admin'])) &&
+             (!(data.keys().hasAny(['createdAt'])) || isValidDateString(data.createdAt));
+    }
+
+    function isValidInsights(insights) {
+      let allowedFields = ['positives', 'negatives', 'recommendation', 'frequency', 'maxIntake', 'recommendedFrequency', 'frequencyReason', 'whoShouldBeCareful', 'healthierAlternatives'];
+      return insights is map &&
+             insights.keys().hasAll(['positives', 'negatives', 'recommendation', 'frequency', 'maxIntake', 'recommendedFrequency', 'frequencyReason', 'whoShouldBeCareful', 'healthierAlternatives']) &&
+             insights.positives is list &&
+             insights.negatives is list &&
+             insights.recommendation is string &&
+             insights.frequency is string &&
+             insights.maxIntake is string &&
+             insights.recommendedFrequency in ['Avoid', 'Occasionally', 'Regular', 'Healthy', 'Risky'] &&
+             insights.frequencyReason is string &&
+             insights.whoShouldBeCareful is list &&
+             insights.healthierAlternatives is list;
+    }
+
+    function isValidProduct(data) {
+      let allowedFields = ['productName', 'brandName', 'normalizedKey', 'nutritionData', 'healthScore', 'category', 'uiLabel', 'insights', 'createdAt'];
+      return hasOnlyAllowedFields(allowedFields) &&
+             hasRequiredFields(['productName', 'brandName', 'normalizedKey', 'nutritionData', 'healthScore', 'category', 'uiLabel', 'insights', 'createdAt']) &&
+             data.productName is string && data.productName.size() > 0 && data.productName.size() < 500 &&
+             data.brandName is string && data.brandName.size() >= 0 && data.brandName.size() < 200 &&
+             data.normalizedKey is string && data.normalizedKey.size() > 0 && data.normalizedKey.size() < 700 &&
+             data.nutritionData is map &&
+             data.healthScore is number && data.healthScore >= 0 && data.healthScore <= 100 &&
+             data.category in ['Healthy', 'Moderate', 'Risky', 'Unhealthy'] &&
+             data.uiLabel in ['Healthy', 'Occasionally', 'Risky', 'Avoid'] &&
+             isValidInsights(data.insights) &&
+             isValidDateString(data.createdAt);
+    }
+
+    function isValidHistory(data) {
+      let allowedFields = ['productId', 'scannedAt', 'productName', 'brandName', 'healthScore', 'category', 'uiLabel', 'calories', 'protein', 'sugar', 'fat', 'recommendedFrequency'];
+      return hasOnlyAllowedFields(allowedFields) &&
+             hasRequiredFields(['productId', 'scannedAt', 'productName', 'brandName', 'healthScore', 'category', 'uiLabel', 'recommendedFrequency']) &&
+             data.productId is string && data.productId.size() > 0 &&
+             isValidDateString(data.scannedAt) &&
+             data.productName is string && data.productName.size() > 0 && data.productName.size() < 500 &&
+             data.brandName is string && data.brandName.size() >= 0 && data.brandName.size() < 200 &&
+             data.healthScore is number && data.healthScore >= 0 && data.healthScore <= 100 &&
+             data.category in ['Healthy', 'Moderate', 'Risky', 'Unhealthy'] &&
+             data.uiLabel in ['Healthy', 'Occasionally', 'Risky', 'Avoid'] &&
+             data.recommendedFrequency in ['Avoid', 'Occasionally', 'Regular', 'Healthy', 'Risky'] &&
+             isValidOptionalNumber(data, 'calories', 0, 10000) &&
+             isValidOptionalNumber(data, 'protein', 0, 1000) &&
+             isValidOptionalNumber(data, 'sugar', 0, 1000) &&
+             isValidOptionalNumber(data, 'fat', 0, 1000);
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && uidUnchanged() && (!(request.resource.data.keys().hasAny(['role'])) || request.resource.data.role == 'user');
+      allow update: if (isOwner(userId) && isValidUser(request.resource.data) && uidNotModified() && request.resource.data.createdAt == resource.data.createdAt && request.resource.data.role == resource.data.role) || isAdmin();
+      allow delete: if isAdmin();
+
+      match /history/{scanId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && isValidHistory(request.resource.data);
+        allow update: if isAdmin();
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    match /products/{productId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidProduct(request.resource.data);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}

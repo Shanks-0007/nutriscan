@@ -1,0 +1,5 @@
+{
+  "name": "NutriScan",
+  "description": "AI-powered nutrition label analyzer that extracts nutritional values and provides health insights.",
+  "requestFramePermissions": []
+}
