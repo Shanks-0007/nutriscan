@@ -300,12 +300,17 @@ Tools:
 
 ## 👨‍💻 Contributors
 
-- Your Name
-- Team Members (if any)
+- Varanasi SriRama Sashanka
+- Vinayak Alwala
+- Banothu Uday Naik
+- Vadla Pranay Chary
 
 ---
 
 ## 🏫 Academic Information
+Department of Computer Science and Engineering
+
+B V Raju Institute of Technology
 
 Domain: Full Stack Development with AI
 
