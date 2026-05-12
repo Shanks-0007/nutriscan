@@ -1,20 +1,336 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# NutriScan – AI Powered Food Nutrition Analyzer
 
-# Run and deploy your AI Studio app
+## 🌐 Live Demo
+🔗 Website: https://nutriscan-eta-five.vercel.app/
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/270618a7-3613-429c-865f-a50bcb8e3381
+## 📌 Overview
 
-## Run Locally
+NutriScan is an AI-powered smart nutrition analysis platform that helps users identify and understand the nutritional content of packaged food products.
 
-**Prerequisites:**  Node.js
+The system uses:
+
+- Optical Character Recognition (OCR)
+- AI-based food label extraction
+- Nutrition analysis
+- Ingredient detection
+- Health-based food evaluation
+
+Users can simply upload or scan food labels, and NutriScan automatically extracts nutritional information and presents it in an easy-to-understand format.
+
+The platform aims to make healthy food choices simpler, faster, and more accessible for everyone.
+
+---
+
+## 🚀 Problem Statement
+
+Many consumers struggle to:
+
+❌ Understand complex nutrition labels  
+❌ Analyze packaged food ingredients quickly  
+❌ Identify unhealthy food products  
+❌ Compare nutritional values effectively  
+❌ Make informed dietary decisions  
+
+Traditional nutrition tracking apps mostly depend on manually entered data or pre-stored databases, which may not include newly released products.
+
+NutriScan solves this by using:
+
+- OCR-based label scanning
+- Intelligent nutrition extraction
+- AI-powered food analysis
+- Real-time nutritional evaluation
+- Smart ingredient recognition
+
+---
+
+## 🎯 Objectives
+
+- Simplify nutrition analysis for users
+- Automate food label reading
+- Help users make healthier food choices
+- Improve accessibility of nutritional information
+- Reduce manual nutrition tracking effort
+- Build a scalable AI-powered health platform
+
+---
+
+## ✨ Key Features
+
+### 📷 OCR-Based Food Label Scanning
+
+Users can upload or scan packaged food labels.
+
+The system extracts:
+
+- Nutritional values
+- Ingredients
+- Calories
+- Sugar content
+- Protein information
+- Fat composition
+
+---
+
+### 🧠 AI-Powered Nutrition Analysis
+
+NutriScan intelligently analyzes extracted data and provides:
+
+- Nutritional summaries
+- Health insights
+- Ingredient interpretation
+- Food quality evaluation
+
+---
+
+### 🥗 Smart Food Evaluation
+
+The platform helps users identify:
+
+- High sugar foods
+- High sodium products
+- Protein-rich foods
+- Healthy vs unhealthy products
+
+---
+
+### ⚡ Real-Time Processing
+
+Features include:
+
+- Instant OCR detection
+- Fast nutrition extraction
+- Quick AI-based analysis
+- Responsive user experience
+
+---
+
+### 📱 User-Friendly Interface
+
+Simple and modern UI designed for:
+
+- Easy food scanning
+- Better readability
+- Smooth navigation
+- Mobile responsiveness
+
+---
+
+## 🧠 System Architecture
+
+NutriScan follows a modular AI-powered architecture.
+
+### Main Components
+
+### 1. Frontend Interface
+
+Handles:
+
+- Image upload
+- Nutrition display
+- User interaction
+- Responsive design
+
+### 2. OCR Processing Module
+
+Responsible for:
+
+- Text extraction
+- Food label recognition
+- Data parsing
+
+### 3. AI Analysis Engine
+
+Performs:
+
+- Nutrition interpretation
+- Ingredient analysis
+- Health evaluation
+
+### 4. Backend Services
+
+Handles:
+
+- API communication
+- Data processing
+- Request management
+
+---
+
+## ⚙️ Technology Stack
+
+### Frontend
+
+- React.js
+- HTML5
+- CSS3
+- JavaScript
+- Tailwind CSS
+
+### AI & OCR
+
+- OCR Techniques
+- AI-based Text Processing
+
+### Backend
+
+- Node.js
+- Express.js
+
+### Deployment
+
+- Vercel
+
+---
+
+## 📂 Project Structure
+
+```bash
+NutriScan/
+│
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   ├── assets/
+│   ├── hooks/
+│   └── App.js
+│
+├── README.md
+├── package.json
+└── .env
 
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+🔄 Workflow of the System
+Step 1: Upload Food Label
+
+User uploads an image of a packaged food product.
+
+Step 2: OCR Processing
+
+The system extracts text from the uploaded image.
+
+Step 3: Data Extraction
+
+Nutrition-related values and ingredients are identified.
+
+Step 4: AI Analysis
+
+The extracted data is analyzed for nutritional insights.
+
+Step 5: Result Display
+
+Users receive:
+
+Nutrition summary
+Ingredient analysis
+Health evaluation
+📊 Advantages of NutriScan
+
+✅ Faster nutrition analysis
+
+✅ Easy food label understanding
+
+✅ AI-powered smart insights
+
+✅ Reduced manual effort
+
+✅ Better health awareness
+
+✅ User-friendly interface
+
+✅ Real-time food evaluation
+
+🔐 Security Features
+Secure API communication
+Safe image handling
+Protected user interactions
+Secure backend processing
+📈 Future Enhancements
+🤖 Advanced AI Recommendations
+
+Add:
+
+Personalized dietary suggestions
+AI nutrition scoring
+Health risk prediction
+📱 Mobile Application
+
+Develop:
+
+Android app
+iOS app
+Cross-platform support
+🌍 Multi-Language OCR
+
+Support for:
+
+Regional languages
+Multi-language food labels
+📊 Nutrition Dashboard
+
+Features:
+
+Food history tracking
+Daily nutrition monitoring
+Health analytics
+🧪 Installation Guide
+Clone the Repository
+git clone https://github.com/your-username/NutriScan.git
+Navigate into the Project
+cd NutriScan
+Install Dependencies
+npm install
+Run the Application
+npm run dev
+🧪 Testing
+
+Suggested testing types:
+
+Unit Testing
+UI Testing
+OCR Accuracy Testing
+Performance Testing
+
+Tools:
+
+Jest
+React Testing Library
+Postman
+👨‍💻 Contributors
+Your Name
+Team Members (if any)
+🏫 Academic Information
+
+Domain: Full Stack Development with AI
+
+Academic Year: 2025–2026
+
+📜 License
+
+This project is developed for academic and educational purposes.
+
+You may modify and use the project with proper attribution.
+
+🤝 Contributing
+
+Contributions are welcome.
+
+Steps:
+
+Fork the repository
+Create a new branch
+Commit changes
+Push the branch
+Create a Pull Request
+⭐ Support
+
+If you like this project:
+
+⭐ Star the repository
+
+🍴 Fork the repository
+
+📢 Share the project
