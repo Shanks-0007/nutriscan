@@ -1,6 +1,7 @@
 # NutriScan – AI Powered Food Nutrition Analyzer
 
 ## 🌐 Live Demo
+
 🔗 Website: https://nutriscan-eta-five.vercel.app/
 
 ---
@@ -32,8 +33,6 @@ Many consumers struggle to:
 ❌ Identify unhealthy food products  
 ❌ Compare nutritional values effectively  
 ❌ Make informed dietary decisions  
-
-Traditional nutrition tracking apps mostly depend on manually entered data or pre-stored databases, which may not include newly released products.
 
 NutriScan solves this by using:
 
@@ -117,47 +116,6 @@ Simple and modern UI designed for:
 
 ---
 
-## 🧠 System Architecture
-
-NutriScan follows a modular AI-powered architecture.
-
-### Main Components
-
-### 1. Frontend Interface
-
-Handles:
-
-- Image upload
-- Nutrition display
-- User interaction
-- Responsive design
-
-### 2. OCR Processing Module
-
-Responsible for:
-
-- Text extraction
-- Food label recognition
-- Data parsing
-
-### 3. AI Analysis Engine
-
-Performs:
-
-- Nutrition interpretation
-- Ingredient analysis
-- Health evaluation
-
-### 4. Backend Services
-
-Handles:
-
-- API communication
-- Data processing
-- Request management
-
----
-
 ## ⚙️ Technology Stack
 
 ### Frontend
@@ -168,23 +126,21 @@ Handles:
 - JavaScript
 - Tailwind CSS
 
-### AI & OCR
-
-- OCR Techniques
-- AI-based Text Processing
-
 ### Backend
 
 - Node.js
 - Express.js
+
+### AI & OCR
+
+- OCR Techniques
+- AI-based Text Processing
 
 ### Deployment
 
 - Vercel
 
 ---
-
-## 📂 Project Structure
 
 ## 📂 Project Structure
 
@@ -205,31 +161,37 @@ NutriScan/
 └── .env
 ```
 
-🔄 Workflow of the System
-Step 1: Upload Food Label
+---
+
+## 🔄 Workflow of the System
+
+### Step 1: Upload Food Label
 
 User uploads an image of a packaged food product.
 
-Step 2: OCR Processing
+### Step 2: OCR Processing
 
 The system extracts text from the uploaded image.
 
-Step 3: Data Extraction
+### Step 3: Data Extraction
 
 Nutrition-related values and ingredients are identified.
 
-Step 4: AI Analysis
+### Step 4: AI Analysis
 
 The extracted data is analyzed for nutritional insights.
 
-Step 5: Result Display
+### Step 5: Result Display
 
 Users receive:
 
-Nutrition summary
-Ingredient analysis
-Health evaluation
-📊 Advantages of NutriScan
+- Nutrition summary
+- Ingredient analysis
+- Health evaluation
+
+---
+
+## 📊 Advantages of NutriScan
 
 ✅ Faster nutrition analysis
 
@@ -245,89 +207,135 @@ Health evaluation
 
 ✅ Real-time food evaluation
 
-🔐 Security Features
-Secure API communication
-Safe image handling
-Protected user interactions
-Secure backend processing
-📈 Future Enhancements
-🤖 Advanced AI Recommendations
+---
+
+## 🔐 Security Features
+
+- Secure API communication
+- Safe image handling
+- Protected user interactions
+- Secure backend processing
+
+---
+
+## 📈 Future Enhancements
+
+### 🤖 Advanced AI Recommendations
 
 Add:
 
-Personalized dietary suggestions
-AI nutrition scoring
-Health risk prediction
-📱 Mobile Application
+- Personalized dietary suggestions
+- AI nutrition scoring
+- Health risk prediction
+
+### 📱 Mobile Application
 
 Develop:
 
-Android app
-iOS app
-Cross-platform support
-🌍 Multi-Language OCR
+- Android app
+- iOS app
+- Cross-platform support
+
+### 🌍 Multi-Language OCR
 
 Support for:
 
-Regional languages
-Multi-language food labels
-📊 Nutrition Dashboard
+- Regional languages
+- Multi-language food labels
+
+### 📊 Nutrition Dashboard
 
 Features:
 
-Food history tracking
-Daily nutrition monitoring
-Health analytics
-🧪 Installation Guide
-Clone the Repository
+- Food history tracking
+- Daily nutrition monitoring
+- Health analytics
+
+---
+
+## 🧪 Installation Guide
+
+### Clone the Repository
+
+```bash
 git clone https://github.com/your-username/NutriScan.git
-Navigate into the Project
+```
+
+### Navigate into the Project
+
+```bash
 cd NutriScan
-Install Dependencies
+```
+
+### Install Dependencies
+
+```bash
 npm install
-Run the Application
+```
+
+### Run the Application
+
+```bash
 npm run dev
-🧪 Testing
+```
+
+---
+
+## 🧪 Testing
 
 Suggested testing types:
 
-Unit Testing
-UI Testing
-OCR Accuracy Testing
-Performance Testing
+- Unit Testing
+- UI Testing
+- OCR Accuracy Testing
+- Performance Testing
 
 Tools:
 
-Jest
-React Testing Library
-Postman
-👨‍💻 Contributors
-Your Name
-Team Members (if any)
-🏫 Academic Information
+- Jest
+- React Testing Library
+- Postman
+
+---
+
+## 👨‍💻 Contributors
+
+- Your Name
+- Team Members (if any)
+
+---
+
+## 🏫 Academic Information
 
 Domain: Full Stack Development with AI
 
 Academic Year: 2025–2026
 
-📜 License
+---
+
+## 📜 License
 
 This project is developed for academic and educational purposes.
 
 You may modify and use the project with proper attribution.
 
-🤝 Contributing
+---
+
+## 🤝 Contributing
 
 Contributions are welcome.
 
 Steps:
 
-Fork the repository
-Create a new branch
-Commit changes
-Push the branch
-Create a Pull Request
-⭐ Support
+1. Fork the repository
+2. Create a new branch
+3. Commit changes
+4. Push the branch
+5. Create a Pull Request
+
+---
+
+## ⭐ Support
 
 If you like this project:
 
