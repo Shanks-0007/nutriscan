@@ -186,6 +186,8 @@ Handles:
 
 ## 📂 Project Structure
 
+## 📂 Project Structure
+
 ```bash
 NutriScan/
 │
@@ -201,7 +203,7 @@ NutriScan/
 ├── README.md
 ├── package.json
 └── .env
-
+```
 
 🔄 Workflow of the System
 Step 1: Upload Food Label
